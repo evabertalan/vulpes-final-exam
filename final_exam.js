@@ -8,11 +8,12 @@ function ObjectToJson(fileName, object) {
 }
 
 ObjectToJson.prototype.writeObjectToJson = function(cb){
+  var _this = this;
   setTimeout(function() {
-    fs.writeFile(this.fileName, function(err, object){
+    _this.fs.writeFile(_this.fileName, function(err, object){
       if (err) {
         return cb(err);
-      }
+      };
       cb(null, JSON.stringify(object));
     });
   }, 2000);
