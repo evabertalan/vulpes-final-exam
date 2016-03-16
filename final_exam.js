@@ -2,10 +2,22 @@
 
 var fs = require('fs');
 
-function objectToJson(fileName, object, cb) {
-  setTimeout(function() {
-    fs.writeFile(fileName, JSON.stringify(object));
-  }, 2000);
+function ObjectToJson(fileName, object) {
+  this.fileName = fileName;
+  this.object = object;
 }
 
-objectToJson('./exam.json', {'medve': 'alma'});
+ObjectToJson.prototype.writeObjectToJson = function(cb){
+  setTimeout(function() {
+    fs.writeFile(this.fileName, function(err, object){
+      if (err) {
+        return cb(err);
+      }
+      cb(null, JSON.stringify(object));
+    });
+  }, 2000);
+};
+
+var writeObject = new ObjectToJson('./exam.json', {'medve': 'majom'});
+ 
+writeObject.writeObjectToJson();
